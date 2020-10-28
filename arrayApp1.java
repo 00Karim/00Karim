@@ -1,3 +1,5 @@
+// Author:  Karim Nekzad
+
 package arrayApp1;
 
 import java.util.InputMismatchException;
@@ -166,4 +168,8 @@ public class arrayApp1 {
             break;
         }
     }
+    
+    public static void main(String[] args) {
+		new arrayApp1();
+	}
 }
