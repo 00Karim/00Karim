@@ -10,9 +10,6 @@ class MainArrayApp {
 	private int[] intArray;
 	private Random random;
 
-	private int userInputInt;
-	private String userResponseString;
-
 	/**
 	 * Creates an integer array and calls the initial prompt method.
 	 */
@@ -41,8 +38,8 @@ class MainArrayApp {
 		System.out.println("Would you like to modify it?");
 		System.out.print("Enter your response (Yes or No): ");
 
-		userResponseString = scanner.next();
-		switch (userResponseString.toLowerCase()) {
+		String responseStr = scanner.next();
+		switch (responseStr.toLowerCase()) {
 		case "yes":
 			System.out.println();
 			System.out.println("What would you like to do?");
@@ -51,15 +48,15 @@ class MainArrayApp {
 			System.out.println("3. Sort the array (merge sort)");
 			System.out.print("Enter you response: ");
 
-			userInputInt = scanner.nextInt();
+			int response = scanner.nextInt();
 
 			System.out.println();
 
-			if (userInputInt == 1) {
+			if (response == 1) {
 				removeIntFromArrayProgram();
-			} else if (userInputInt == 2) {
+			} else if (response == 2) {
 				addArrayProgram();
-			} else if (userInputInt == 3) {
+			} else if (response == 3) {
 
 				sortProgram(intArray);
 
@@ -85,20 +82,19 @@ class MainArrayApp {
 
 		System.out.print("Enter the number you would like to remove: ");
 
-		userInputInt = 999;
+		int response = 999;
 		int sentinel = 1;
 		do {
 			try {
-				userInputInt = scanner.nextInt();
+				response = scanner.nextInt();
 				for (int i = 0; i < intArray.length; ++i) {
-					if (userInputInt == intArray[i]) {
+					if (response == intArray[i]) {
 						sentinel = 0;
 					}
 				}
 				if (sentinel == 1) {
 					System.out.println();
 					System.out.println("That number does not exist within the Array." + " Please try again.");
-					userInputInt = 999;
 					System.out.print("Enter a new number: ");
 				}
 			} catch (InputMismatchException e) {
@@ -109,34 +105,34 @@ class MainArrayApp {
 			}
 		} while (sentinel == 1);
 
-		int[] result = ArrayUtil.removeNumberFromArray(intArray, userInputInt);
+		int[] result = ArrayUtil.removeNumberFromArray(intArray, response);
 
 		System.out.println();
 		System.out.println("Original Array: ");
 		ArrayUtil.printIntegerArray(intArray);
-		System.out.println("Here is the new array: ");
+		System.out.println("\nHere is the new array: ");
 		ArrayUtil.printIntegerArray(result);
-		System.out.println("You removed the number: " + userInputInt);
+		System.out.println("You removed the number: " + response);
 	}
 
 	private void addArrayProgram() {
 		System.out.print("Enter the amount of numbers you would like to add: ");
-		userInputInt = scanner.nextInt();
+		int response = scanner.nextInt();
 
-		int[] holdValuesAdded = new int[userInputInt];
+		int[] holdValuesAdded = new int[response];
 
 		System.out.println();
 		System.out.println("Enter the numbers you would like to add: ");
-		for (int i = 0; i < userInputInt; ++i) {
+		for (int i = 0; i < response; ++i) {
 			holdValuesAdded[i] = scanner.nextInt();
 		}
 
-		int[] result = ArrayUtil.addNumberToArray(intArray, userInputInt, holdValuesAdded);
+		int[] result = ArrayUtil.addNumberToArray(intArray, response, holdValuesAdded);
 
 		System.out.println();
 		System.out.println("Original array: ");
 		ArrayUtil.printIntegerArray(intArray);
-		System.out.println("Here is the new array: ");
+		System.out.println("\nHere is the new array: ");
 		ArrayUtil.printIntegerArray(result);
 		System.out.print("You added the number(s): ");
 		ArrayUtil.printIntegerArray(holdValuesAdded);
