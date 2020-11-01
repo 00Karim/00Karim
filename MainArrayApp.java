@@ -31,12 +31,6 @@ class MainArrayApp {
 	}
 
 	/**
-	 * Prints out a given array in a formatted manner.
-	 * 
-	 * @param array The integer array being printed.
-	 */
-
-	/**
 	 * A method to hold the bulk of the messages displayed to the user. This method
 	 * exists to declutter the constructor, main method, and other method calls.
 	 */
