@@ -125,16 +125,6 @@ class MainArrayApp {
 		System.out.println("You removed the number: " + userInputInt);
 	}
 
-	/**
-	 * Removes a specified number from a given integer array. It achieves this by
-	 * creating a new array of length one smaller than the given array and copies
-	 * over all the values except the one being removed.
-	 * 
-	 * @param intArray  The array being modified.
-	 * @param removeNum The number being removed from the given array.
-	 * @return The modified array.
-	 */
-
 	private void addArrayProgram() {
 		System.out.print("Enter the amount of numbers you would like to add: ");
 		userInputInt = scanner.nextInt();
