@@ -7,12 +7,15 @@ class MainArrayApp {
 
 	private Scanner scanner;
 	private int[] intArray;
+	private int[] originalArray;
 	private Random random;
+	private int endRecursion;
 
 	/**
 	 * Creates an integer array and calls the initial prompt method.
 	 */
 	public MainArrayApp() {
+		endRecursion = 0;
 		scanner = new Scanner(System.in);
 		random = new Random();
 		// new integer array of random size 5 - 15;
@@ -40,6 +43,11 @@ class MainArrayApp {
 			intArray[i] = random.nextInt(151);
 		}
 
+		originalArray = new int[intArray.length];
+		for (int i = 0; i < originalArray.length; i++) {
+			originalArray[i] = intArray[i];
+		}
+
 		initialPrompt();
 	}
 
@@ -48,6 +56,12 @@ class MainArrayApp {
 	 * exists to declutter the constructor, main method, and other method calls.
 	 */
 	private void initialPrompt() {
+		if (endRecursion == 1) {
+			return;
+		}
+
+		System.out.println();
+		System.out.println("___________________________________________________");
 		System.out.println("Here in an array of numbers: ");
 		ArrayUtil.printIntegerArray(intArray);
 		System.out.println();
@@ -62,9 +76,10 @@ class MainArrayApp {
 			System.out.println("1. Remove numbers from the Array");
 			System.out.println("2. Add numbers to the Array");
 			System.out.println("3. Sort the array (merge sort)");
+			System.out.println("4. End the program.");
 			System.out.print("Enter you response: ");
 
-			int response = scanner.nextInt();
+			int response = requestInt();
 
 			System.out.println();
 
@@ -73,18 +88,25 @@ class MainArrayApp {
 			} else if (response == 2) {
 				addValues();
 			} else if (response == 3) {
-				sortProgram(intArray);
+				sortProgram();
+			} else if (response == 4) {
+				System.out.println("End of program.");
+				endRecursion = 1;
 			}
 			break;
 		case "no":
 			System.out.println();
 			System.out.println("Okay. End of program.");
+			endRecursion = 1;
 			break;
 		default:
 			System.out.println();
-			System.out.println("That response is invalid. End of program.");
+			System.out.println("That response is invalid. Please try again.");
+			System.out.println();
 			break;
 		}
+
+		initialPrompt();
 	}
 
 	/**
@@ -112,7 +134,6 @@ class MainArrayApp {
 		System.out.println();
 		System.out.println("Enter the values you would like to remove: ");
 
-		// checks if the values entered by the user exist within the array
 		int[] tempArray = new int[intArray.length];
 		for (int i = 0; i < tempArray.length; i++) {
 			tempArray[i] = intArray[i];
@@ -159,16 +180,17 @@ class MainArrayApp {
 			valuesRemoved[i] = valuesToRemove[i];
 		}
 
-		int[] result = ArrayUtil.removeValuesFromArray(intArray, valuesToRemove);
+		intArray = ArrayUtil.removeValuesFromArray(intArray, valuesToRemove);
 
 		System.out.println();
 		System.out.println("Original array: ");
-		ArrayUtil.printIntegerArray(intArray);
+		ArrayUtil.printIntegerArray(originalArray);
 		System.out.println("\nHere is the new array: ");
-		ArrayUtil.printIntegerArray(result);
+		ArrayUtil.printIntegerArray(intArray);
 		System.out.print("You removed the number(s): ");
 		ArrayUtil.printIntegerArray(valuesRemoved);
 
+		resetOriginalArray();
 	}
 
 	/**
@@ -189,15 +211,28 @@ class MainArrayApp {
 			valuesToAdd[count++] = requestInt();
 		}
 
-		int[] result = ArrayUtil.addValuesToArray(intArray, valuesToAdd);
+		intArray = ArrayUtil.addValuesToArray(intArray, valuesToAdd);
 
 		System.out.println();
 		System.out.println("Original array: ");
-		ArrayUtil.printIntegerArray(intArray);
+		ArrayUtil.printIntegerArray(originalArray);
 		System.out.println("\nHere is the new array: ");
-		ArrayUtil.printIntegerArray(result);
+		ArrayUtil.printIntegerArray(intArray);
 		System.out.print("You added the number(s): ");
 		ArrayUtil.printIntegerArray(valuesToAdd);
+
+		resetOriginalArray();
+	}
+
+	private void sortProgram() {
+		System.out.println("Initial array: ");
+		ArrayUtil.printIntegerArray(intArray);
+
+		intArray = ArrayUtil.mergeSort(intArray);
+		System.out.println("\nSorted Array: ");
+		ArrayUtil.printIntegerArray(intArray);
+
+		resetOriginalArray();
 	}
 
 	/**
@@ -223,15 +258,18 @@ class MainArrayApp {
 		return value;
 	}
 
-	private void sortProgram(int[] array) {
-
-		System.out.println("Initial array: ");
-		ArrayUtil.printIntegerArray(array);
-
-		array = ArrayUtil.mergeSort(array);
-		System.out.println("\nSorted Array: ");
-		ArrayUtil.printIntegerArray(array);
-
+	/**
+	 * Helper method that makes the originalArray field equal to the intArray field,
+	 * as the next iteration of code will alter the intArray and the old values of
+	 * intArray will become the new originalArray.
+	 */
+	private void resetOriginalArray() {
+		int[] temp = new int[intArray.length];
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = intArray[i];
+		}
+		
+		originalArray = temp;
 	}
 
 }
