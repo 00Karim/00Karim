@@ -15,27 +15,39 @@ class ArrayUtil {
 	}
 
 	/**
-	 * Removes a specified number from a given integer array. It achieves this by
-	 * creating a new array of length one smaller than the given array and copies
-	 * over all the values except the one being removed.
+	 * Removes a specified amount of numbers from a given integer array. It achieves
+	 * this by creating a new integer array that has a length of the original array
+	 * minus the amount of numbers being removed. It then copies over all of the non
+	 * removed values to the new array.
 	 * 
-	 * @param intArray  The array being modified.
-	 * @param removeNum The number being removed from the given array.
+	 * @param intArray       The array being modified.
+	 * @param valuesToRemove The array of values being removed.
 	 * @return The modified array.
 	 */
-	public static int[] removeNumberFromArray(int[] intArray, int removeNum) {
-		int[] modifiedArray;
-		int count;
+	public static int[] removeValuesFromArray(int[] array, int[] valuesToRemove) {
+		int[] modifiedArray = new int[array.length - valuesToRemove.length];
 
-		modifiedArray = new int[intArray.length - 1];
-		count = 0;
-
-		for (int i = 0; i < intArray.length; ++i) {
-			if (intArray[i] != removeNum) {
-				modifiedArray[count] = intArray[i];
-				count++;
+		// if a value of the original array exists within the array of values to remove,
+		// it is not copied over to the new modified array.
+		int modifiedArrayPointer = 0;
+		boolean removed = false;
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < valuesToRemove.length; j++) {
+				if (array[i] == valuesToRemove[j]) {
+					removed = true;
+					valuesToRemove[j] = -1;
+					// once it finds one that's the same, break, becuase there might be duplicate
+					// values that it will end up overwriting when we only want it to overwrite one
+					// value at a time
+					break;
+				}
 			}
+			if (!removed) {
+				modifiedArray[modifiedArrayPointer++] = array[i];
+			}
+			removed = false;
 		}
+
 		return modifiedArray;
 	}
 
@@ -53,20 +65,15 @@ class ArrayUtil {
 	 *                   array.
 	 * @return The modified array.
 	 */
-	public static int[] addNumberToArray(int[] array, int amntAdded, int[] numbsToAdd) {
-		int[] modifiedArray;
-		int count;
-
-		modifiedArray = new int[array.length + amntAdded];
-		count = 0;
+	public static int[] addValuesToArray(int[] array, int[] valuesToAdd) {
+		int[] modifiedArray = new int[array.length + valuesToAdd.length];
 
 		for (int i = 0; i < array.length; ++i) {
 			modifiedArray[i] = array[i];
 		}
-		for (int i = array.length; i < array.length + amntAdded; ++i) {
-			modifiedArray[i] = numbsToAdd[count++];
-			// Removed count++ from this line and passed it as index pos for numbsToAdd
-			// array
+
+		for (int j = array.length, k = 0; k < valuesToAdd.length; j++, k++) {
+			modifiedArray[j] = valuesToAdd[k];
 		}
 		return modifiedArray;
 	}
