@@ -102,18 +102,16 @@ class MainArrayApp {
 
 		System.out.print("Enter the amount of numbers you would like to remove: ");
 
-		int temp = -1;
+		int amountToRemove = -1;
 		boolean invalidAmount = true;
 		while (invalidAmount) {
-			temp = requestInt();
-			if (temp > intArray.length) {
+			amountToRemove = requestInt();
+			if (amountToRemove > intArray.length) {
 				System.out.println("There aren't that many numbers in the array to remove." + "\n" + "Try Again: ");
 				continue;
 			}
 			invalidAmount = false;
 		}
-
-		int amountToRemove = temp;
 
 		int[] valuesToRemove = new int[amountToRemove];
 
