@@ -21,23 +21,6 @@ class MainArrayApp {
 		// new integer array of random size 5 - 15;
 		intArray = new int[(random.nextInt(21) / 2) + 5];
 
-//		// fills the intArray with non duplicate random values from 0 to 150
-//		intArray[0] = random.nextInt(151);
-//		int count = 1;
-//		boolean duplicate = false;
-//		while (count < intArray.length) {
-//			int temp = random.nextInt(151);
-//			for (int i = 0; i < count; i++) {
-//				if (intArray[i] == temp) {
-//					duplicate = true;
-//				}
-//			}
-//			if (!duplicate) {
-//				intArray[count++] = temp;
-//			}
-//			duplicate = false;
-//		}
-
 		// fills the intArray with possible duplicate random values from 0 to 150
 		for (int i = 0; i < intArray.length; i++) {
 			intArray[i] = random.nextInt(151);
@@ -61,6 +44,7 @@ class MainArrayApp {
 		System.out.println("___________________________________________________");
 		System.out.println("Here in an array of numbers: ");
 		ArrayUtil.printIntegerArray(intArray);
+
 		System.out.println();
 		System.out.println("Would you like to modify it?");
 		System.out.print("Enter your response (Yes or No): ");
@@ -85,7 +69,7 @@ class MainArrayApp {
 			} else if (response == 2) {
 				addValues();
 			} else if (response == 3) {
-				sortProgram();
+				sortValues();
 			} else if (response == 4) {
 				System.out.println("End of program.");
 				endRecursion = 1;
@@ -189,8 +173,11 @@ class MainArrayApp {
 		System.out.println();
 		System.out.println("Original array: ");
 		ArrayUtil.printIntegerArray(originalArray);
-		System.out.println("\nHere is the new array: ");
+
+		System.out.println();
+		System.out.println("Here is the new array: ");
 		ArrayUtil.printIntegerArray(intArray);
+
 		System.out.print("You removed the number(s): ");
 		ArrayUtil.printIntegerArray(valuesRemoved);
 
@@ -228,7 +215,7 @@ class MainArrayApp {
 		resetOriginalArray();
 	}
 
-	private void sortProgram() {
+	private void sortValues() {
 		System.out.println("Initial array: ");
 		ArrayUtil.printIntegerArray(intArray);
 
