@@ -163,6 +163,7 @@ class MainArrayApp {
 				for (int i : intArray) {
 					if (value == i) {
 						alreadyRemovedAll = true;
+						break;
 					}
 				}
 				if (alreadyRemovedAll) {
