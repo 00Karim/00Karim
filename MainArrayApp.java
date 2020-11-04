@@ -114,6 +114,11 @@ class MainArrayApp {
 	 * field.
 	 */
 	private void removeValues() {
+		if (intArray.length == 0) {
+			System.out.println("This array is empty.  Nothing to remove.");
+			return;
+		}
+
 		System.out.print("Enter the amount of numbers you would like to remove: ");
 
 		int temp = -1;
@@ -139,6 +144,7 @@ class MainArrayApp {
 			tempArray[i] = intArray[i];
 		}
 
+		// Ensures values inputed exist within the array
 		int value;
 		int count = 0;
 		boolean valNotFound = true;
@@ -228,8 +234,10 @@ class MainArrayApp {
 		System.out.println("Initial array: ");
 		ArrayUtil.printIntegerArray(intArray);
 
-		intArray = ArrayUtil.mergeSort(intArray);
-		System.out.println("\nSorted Array: ");
+		// intArray = ArrayUtil.mergeSort(intArray);
+		ArrayUtil.mergeSort(intArray);
+		System.out.println();
+		System.out.println("Sorted Array: ");
 		ArrayUtil.printIntegerArray(intArray);
 
 		resetOriginalArray();
@@ -268,7 +276,7 @@ class MainArrayApp {
 		for (int i = 0; i < temp.length; i++) {
 			temp[i] = intArray[i];
 		}
-		
+
 		originalArray = temp;
 	}
 
