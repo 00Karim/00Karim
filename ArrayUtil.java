@@ -78,72 +78,83 @@ class ArrayUtil {
 		return modifiedArray;
 	}
 
-	public static int[] mergeSort(int[] array) {
-
-		// base case
-		if (array.length <= 1) {
-			return array;
-		}
-
-		int midpoint = array.length / 2;
-
-		int[] left = new int[midpoint];
-		int[] right;
-
-		if (array.length % 2 == 0) {
-			right = new int[midpoint];
-		} else {
-			right = new int[midpoint + 1];
-		}
-
-		for (int i = 0; i < left.length; i++) {
-			left[i] = array[i];
-		}
-
-		for (int j = 0; j < right.length; j++) {
-			right[j] = array[midpoint + j];
-		}
-
-		left = mergeSort(left);
-		right = mergeSort(right);
-
-		int[] result = merge(left, right);
-
-		return result;
+	/**
+	 * Client side method with only one parameter
+	 * 
+	 * @param array The array being sorted
+	 */
+	public static void mergeSort(int[] array) {
+		mergeSort(array, 0, array.length - 1);
 	}
 
-	private static int[] merge(int[] left, int[] right) {
+	/**
+	 * Splits the given array into two pieces; the left and right, and merges them
+	 * together in sorted order in the merge method
+	 * 
+	 * @param array The array being sorted
+	 * @param low   The starting index of the array or sub array
+	 * @param high  The ending index of the array or sub array
+	 */
+	private static void mergeSort(int[] array, int low, int high) {
+		if (low < high) {
+			int middle = low + ((high - low) / 2);
 
-		int[] result = new int[left.length + right.length];
+			mergeSort(array, low, middle);
+			mergeSort(array, middle + 1, high);
 
-		int leftPointer, rightPointer, resultPointer;
-		leftPointer = rightPointer = resultPointer = 0;
+			merge(array, low, middle, high);
+		}
+	}
 
-		// while either the left or right has stuff
-		while (leftPointer < left.length || rightPointer < right.length) {
+	/**
+	 * Merges together two sorted arrays
+	 * 
+	 * @param array  The array being sorted
+	 * @param low    The starting index position of the left array
+	 * @param middle The ending index position of the left array
+	 * @param high   The ending index position of the right array
+	 */
+	private static void merge(int[] array, int low, int middle, int high) {
+		// helper array
+		int[] temp = new int[array.length];
 
-			// while they both have stuff
-			while (leftPointer < left.length && rightPointer < right.length) {
-				if (left[leftPointer] < right[rightPointer]) {
-					result[resultPointer++] = left[leftPointer++];
+		// copy both the left and right array into this helper array
+		for (int i = 0; i < array.length; i++) {
+			temp[i] = array[i];
+		}
+
+		// pointer to the left array who's start index is low
+		int leftPointer = low;
+		// pointer to right array who's start index is middle plus 1. (this is specified
+		// in the mergeSort method, where the right array is formed under the assumption
+		// that its start index is middle + 1)
+		int rightPointer = middle + 1;
+		// pointer to original array as we sort it
+		int sortedPointer = low;
+
+		// while either the left or right sub array has stuff leftover
+		while (leftPointer <= middle || rightPointer <= high) {
+			// while they both have stuff leftover
+			while (leftPointer <= middle && rightPointer <= high) {
+				if (temp[leftPointer] < temp[rightPointer]) {
+					array[sortedPointer++] = temp[leftPointer++];
 				} else {
-					result[resultPointer++] = right[rightPointer++];
+					array[sortedPointer++] = temp[rightPointer++];
 				}
 			}
 
-			// adds on leftovers from left array if it didn't finish
-			if (leftPointer < left.length) {
-				result[resultPointer++] = left[leftPointer++];
+			// adds on leftover values from the left array into the original array if there
+			// are any
+			if (leftPointer <= middle) {
+				array[sortedPointer++] = temp[leftPointer++];
 			}
 
-			// adds on leftovers from right array if it didn't finish
-			if (rightPointer < right.length) {
-				result[resultPointer++] = right[rightPointer++];
+			// adds on leftover values from the right array into the original array if there
+			// are any
+			if (rightPointer <= high) {
+				array[sortedPointer++] = temp[rightPointer++];
 			}
-
 		}
-
-		return result;
 	}
 
 }
