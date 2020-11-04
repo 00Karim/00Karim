@@ -43,10 +43,7 @@ class MainArrayApp {
 			intArray[i] = random.nextInt(151);
 		}
 
-		originalArray = new int[intArray.length];
-		for (int i = 0; i < originalArray.length; i++) {
-			originalArray[i] = intArray[i];
-		}
+		resetOriginalArray();
 
 		initialPrompt();
 	}
